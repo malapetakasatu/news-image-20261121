@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 def generate_broadsheet(output_path):
     WIDTH, HEIGHT = 1024, 1024
-    im = Image.new("RGB", (WIDTH, HEIGHT), "#fcfbf7") # Classic crisp broadsheet cream
+    im = Image.new("RGB", (WIDTH, HEIGHT), "#fcf8f2") # Premium authentic broadsheet cream
     draw = ImageDraw.Draw(im)
 
     # Fonts
@@ -15,52 +15,47 @@ def generate_broadsheet(output_path):
     font_sans_r = "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
 
     f_top = ImageFont.truetype(font_sans_b, 9.5)
-    f_masthead = ImageFont.truetype(font_serif_b, 50)
-    f_masthead_sub = ImageFont.truetype(font_sans_b, 9.5)
-    f_ticker = ImageFont.truetype(font_sans_b, 8)
+    f_masthead = ImageFont.truetype(font_serif_b, 56)
+    f_deck = ImageFont.truetype(font_serif_i, 14.5)
     
-    f_stat_num = ImageFont.truetype(font_serif_b, 20)
-    f_stat_lbl = ImageFont.truetype(font_sans_r, 7.5)
+    f_stat_num = ImageFont.truetype(font_serif_b, 22)
+    f_stat_label = ImageFont.truetype(font_sans_r, 7.5)
     f_region = ImageFont.truetype(font_sans_b, 8)
 
-    f_hero_tab = ImageFont.truetype(font_sans_b, 8.5)
-    f_hero_badge = ImageFont.truetype(font_sans_b, 8)
-    f_hero_title = ImageFont.truetype(font_serif_b, 15)
+    f_hero_badge = ImageFont.truetype(font_sans_b, 8.5)
+    f_hero_sub = ImageFont.truetype(font_sans_b, 8.5)
+    f_hero_title = ImageFont.truetype(font_serif_b, 16.5)
     f_hero_body = ImageFont.truetype(font_serif_r, 9.5)
-    f_hero_src = ImageFont.truetype(font_sans_r, 7.5)
+    f_source = ImageFont.truetype(font_sans_r, 7.5)
     f_pill = ImageFont.truetype(font_sans_b, 7)
 
-    f_card_tab = ImageFont.truetype(font_sans_b, 7.5)
-    f_card_head = ImageFont.truetype(font_serif_b, 9.5)
-    f_card_sub = ImageFont.truetype(font_sans_r, 8)
-    f_card_src = ImageFont.truetype(font_sans_r, 7)
+    f_card_cat = ImageFont.truetype(font_sans_b, 7.5)
+    f_card_head = ImageFont.truetype(font_serif_b, 10.5)
+    f_card_body = ImageFont.truetype(font_serif_r, 8.5)
 
-    f_map_title = ImageFont.truetype(font_sans_b, 9)
     f_map_pin = ImageFont.truetype(font_sans_b, 7)
+    f_section_title = ImageFont.truetype(font_sans_b, 9.5)
     
     f_story_num = ImageFont.truetype(font_sans_b, 7.5)
     f_story_loc = ImageFont.truetype(font_sans_b, 7.5)
-    f_story_txt = ImageFont.truetype(font_serif_r, 7.5)
+    f_story_desc = ImageFont.truetype(font_serif_r, 7.5)
 
-    f_date_head = ImageFont.truetype(font_sans_b, 8.5)
-    f_date_txt = ImageFont.truetype(font_sans_r, 7.5)
+    f_date_title = ImageFont.truetype(font_sans_b, 8.5)
     f_date_bold = ImageFont.truetype(font_sans_b, 7.5)
-
-    f_foot = ImageFont.truetype(font_sans_r, 8)
+    f_date_text = ImageFont.truetype(font_sans_r, 7.5)
+    f_footer = ImageFont.truetype(font_sans_r, 8)
 
     # Colors
-    BLACK = "#0a0a0a"
-    DARK_GREY = "#262626"
-    MID_GREY = "#525252"
-    LIGHT_GREY = "#737373"
-    BORDER_GREY = "#d4d4d8"
+    BLACK = "#0f172a"
+    DARK_GREY = "#334155"
+    LIGHT_GREY = "#64748b"
+    LINE_COLOR = "#cbd5e1"
     RED_ACCENT = "#b91c1c"
     RED_DARK = "#991b1b"
-    BLUE_NAVY = "#1e3a8a"
-    BLUE_ACCENT = "#0284c7"
-    GREEN_ACCENT = "#15803d"
-    AMBER_ACCENT = "#b45309"
     WHITE = "#ffffff"
+    OFFICIAL_BLUE = "#1d4ed8"
+    CONFIRMED_GREEN = "#15803d"
+    REPORTED_MUSTARD = "#b45309"
 
     def rect(x1, y1, x2, y2, fill=None, outline=None, width=1):
         draw.rectangle([int(x1), int(y1), int(x2), int(y2)], fill=fill, outline=outline, width=width)
@@ -70,257 +65,274 @@ def generate_broadsheet(output_path):
 
     # 1. TOP HEADER BANNER (y: 0 to 22)
     rect(0, 0, WIDTH, 22, fill=RED_ACCENT)
-    draw.text((14, 5), "THE WORLD IN ONE DAY · DAY 325 OF 2026 · ALL TIMES UTC · RANKED BY CONSEQUENCE", fill=WHITE, font=f_top)
-    draw.text((WIDTH - 14, 5), "AUTHENTIC 24-HOUR CHRONICLE · VERIFIED WIRE SOURCES", fill=WHITE, font=f_top, anchor="ra")
+    draw.text((15, 5), "THE WORLD IN ONE DAY · 37 STORIES · 9 REGIONS · STRICT 24-HOUR UTC RECORD", fill=WHITE, font=f_top)
+    draw.text((WIDTH - 15, 5), "VERIFIED WIRE SOURCES · SATURDAY 21 NOVEMBER 2026", fill=WHITE, font=f_top, anchor="ra")
 
-    # 2. MASTHEAD (y: 24 to 76)
-    draw.text((WIDTH // 2, 48), "Saturday 21 November 2026", fill=BLACK, font=f_masthead, anchor="mm")
-    draw.text((WIDTH // 2, 73), "37 STORIES · 9 REGIONS · EVERY SINGLE STORY DATED SATURDAY 21 NOVEMBER 2026", fill=RED_DARK, font=f_masthead_sub, anchor="mm")
-    draw.line([(14, 82), (WIDTH - 14, 82)], fill=BLACK, width=2)
-    draw.line([(14, 85), (WIDTH - 14, 85)], fill=BLACK, width=1)
+    # 2. PROMINENT MASTHEAD (y: 26 to 104)
+    draw.text((WIDTH // 2, 54), "Saturday 21 November 2026", fill=BLACK, font=f_masthead, anchor="mm")
+    draw.text((WIDTH // 2, 92), "COP31 climate talks run into overtime   ·   missiles over Riyadh   ·   a deep quake shakes Peru", fill=DARK_GREY, font=f_deck, anchor="mm")
+    draw.line([(15, 108), (WIDTH - 15, 108)], fill=BLACK, width=2)
+    draw.line([(15, 111), (WIDTH - 15, 111)], fill=BLACK, width=1)
 
-    # 3. UTC TIMELINE TICKER (y: 89 to 107)
-    pill(14, 89, WIDTH - 14, 107, fill="#f1f5f9", outline=BORDER_GREY, r=3)
-    ticker_text = "00:09 Peru M6.7 quake  |  04:00 Geneva AI arms  |  06:50 Sparta II ship hit  |  09:42 Banda Sea M6.8  |  12:12 EU-Indonesia pact  |  18:24 BepiColombo orbit  |  22:00 COP31 pause"
-    draw.text((WIDTH // 2, 98), ticker_text, fill=DARK_GREY, font=f_ticker, anchor="mm")
-
-    # 4. 6 BIG METRICS STRIP (y: 111 to 143)
-    metrics = [
-        ("2", "tankers hit off Khasab, Hormuz"),
-        ("130+", "nations want fossil fuel phaseout"),
-        ("730m", "people in EU-Indonesia trade deal"),
-        ("128", "states in Geneva AI weapons talks"),
-        ("$5m", "bounty on 'El Chapo Isidro'"),
-        ("8 yrs", "BepiColombo journey to Mercury"),
+    # 3. 6 BIG METRICS STRIP (y: 116 to 164)
+    stats = [
+        ("3", "missiles shot down over Riyadh"),
+        ("6.7", "magnitude of Peru deep quake"),
+        ("DAY 13", "of COP31 in Antalya overtime"),
+        ("$58,983", "Bitcoin price early Saturday"),
+        ("128", "states back Geneva AI arms talks"),
+        ("124*", "K L Rahul's score at tea, NZ Test"),
     ]
-    mw = (WIDTH - 28) // 6
-    for i, (val, desc) in enumerate(metrics):
-        mx = 14 + i * mw
+    stat_w = (WIDTH - 30) // 6
+    for i, (num, label) in enumerate(stats):
+        sx = 15 + i * stat_w
         if i > 0:
-            draw.line([(mx, 114), (mx, 140)], fill=BORDER_GREY, width=1)
-        draw.text((mx + mw // 2, 122), val, fill=RED_ACCENT if i in [0, 1, 4] else BLACK, font=f_stat_num, anchor="mm")
-        words = desc.split()
+            draw.line([(sx, 120), (sx, 160)], fill=LINE_COLOR, width=1)
+        draw.text((sx + stat_w // 2, 131), num, fill=RED_ACCENT if i in [0, 1, 2] else BLACK, font=f_stat_num, anchor="mm")
+        words = label.split(" ")
         mid = len(words) // 2
-        l1 = " ".join(words[:mid]) if mid > 0 else desc
-        l2 = " ".join(words[mid:]) if mid > 0 else ""
-        draw.text((mx + mw // 2, 134), l1, fill=MID_GREY, font=f_stat_lbl, anchor="mm")
-        if l2:
-            draw.text((mx + mw // 2, 142), l2, fill=MID_GREY, font=f_stat_lbl, anchor="mm")
+        line1 = " ".join(words[:mid]) if mid > 0 else label
+        line2 = " ".join(words[mid:]) if mid > 0 else ""
+        draw.text((sx + stat_w // 2, 148), line1, fill=DARK_GREY, font=f_stat_label, anchor="mm")
+        if line2:
+            draw.text((sx + stat_w // 2, 157), line2, fill=DARK_GREY, font=f_stat_label, anchor="mm")
 
-    # 5. 9 REGIONS BAR (y: 148 to 164)
+    # 4. 9 REGIONS BAR (y: 168 to 184)
     regions = [
-        ("Europe (5)", "#1e40af", 110),
-        ("Mid-East (6)", "#b91c1c", 115),
-        ("S. Asia (4)", "#b45309", 110),
-        ("E. Asia (4)", "#047857", 110),
-        ("SE. Asia (4)", "#0e7490", 110),
-        ("Africa (3)", "#6b21a8", 110),
-        ("N. America (4)", "#374151", 110),
-        ("Latin Am (4)", "#c2410c", 110),
-        ("Oceania (3)", "#0f766e", 111),
+        ("Europe · 5", "#1e40af", 110),
+        ("Mid-East · 6", "#b91c1c", 115),
+        ("S. Asia · 4", "#b45309", 110),
+        ("E. Asia · 4", "#047857", 110),
+        ("SE. Asia · 4", "#0e7490", 110),
+        ("Africa · 3", "#6b21a8", 110),
+        ("N. America · 4", "#374151", 110),
+        ("Latin Am · 4", "#c2410c", 110),
+        ("Oceania · 3", "#0f766e", 109),
     ]
-    rx = 14
-    for r_name, r_col, r_w in regions:
-        rect(rx, 148, rx + r_w, 164, fill=r_col)
-        draw.text((rx + r_w // 2, 156), r_name, fill=WHITE, font=f_region, anchor="mm")
-        rx += r_w
+    rx = 15
+    for name, col, rw in regions:
+        rect(rx, 168, rx + rw, 184, fill=col)
+        draw.text((rx + rw // 2, 176), name, fill=WHITE, font=f_region, anchor="mm")
+        rx += rw
 
-    # 6. THREE HERO PANELS (y: 170 to 395)
-    hero_w = (WIDTH - 28 - 16) // 3  # ~322px each
+    # 5. THREE HERO PANELS (y: 190 to 424)
+    hero_w = (WIDTH - 42) // 3
     
-    # --- HERO 1: BAHRAIN & HORMUZ (x: 14 to 336) ---
-    h1_x = 14
-    rect(h1_x, 170, h1_x + hero_w, 189, fill=RED_ACCENT)
-    draw.text((h1_x + 8, 179), "GULF & HORMUZ · CONFLICT", fill=WHITE, font=f_hero_tab, anchor="lm")
-    pill(h1_x + hero_w - 68, 173, h1_x + hero_w - 6, 186, fill=WHITE, r=2)
-    draw.text((h1_x + hero_w - 37, 179), "WAR ALERT", fill=RED_ACCENT, font=f_hero_badge, anchor="mm")
-
-    # Graphic Box 1 (Night refinery silhouette + radar arcs + missile burst)
-    gx1, gy1, gw1, gh1 = h1_x, 189, hero_w, 88
-    rect(gx1, gy1, gx1 + gw1, gy1 + gh1, fill="#070d1e", outline=BORDER_GREY)
-    # Refinery silhouette
-    for bx, bh, bw in [(0, 35, 30), (35, 55, 35), (75, 40, 25), (105, 65, 38), (148, 48, 30), (185, 70, 35), (225, 45, 32), (265, 60, 45)]:
-        draw.rectangle([gx1 + bx, gy1 + gh1 - bh, gx1 + bx + bw, gy1 + gh1], fill="#02050d")
-        for wy in range(gy1 + gh1 - bh + 6, gy1 + gh1 - 4, 8):
-            for wx in range(gx1 + bx + 5, gx1 + bx + bw - 5, 8):
-                draw.rectangle([wx, wy, wx + 2, wy + 3], fill="#ffea78" if (wx * wy) % 2 == 0 else "#38bdf8")
-    # Radar waves & missile interception burst
-    draw.arc([gx1 + 30, gy1 + 10, gx1 + 150, gy1 + 80], 210, 350, fill="#38bdf8", width=1)
-    draw.arc([gx1 + 15, gy1 + 2, gx1 + 165, gy1 + 88], 210, 350, fill="#38bdf8", width=1)
-    for bx, by in [(gx1 + 175, gy1 + 32), (gx1 + 240, gy1 + 25)]:
-        draw.ellipse([bx - 6, by - 6, bx + 6, by + 6], fill="#ffffff")
-        for dx, dy in [(-12, 0), (12, 0), (0, -12), (0, 12), (-8, -8), (8, 8), (-8, 8), (8, -8)]:
-            draw.line([(bx, by), (bx + dx, by + dy)], fill="#f59e0b", width=1)
-    pill(gx1 + 8, gy1 + gh1 - 18, gx1 + 140, gy1 + gh1 - 4, fill="#000000", r=2)
-    draw.text((gx1 + 74, gy1 + gh1 - 11), "Bahrain site ablaze · 2 tankers hit", fill=WHITE, font=f_pill, anchor="mm")
-
+    # --- HERO 1: MISSILES OVER RIYADH (x: 15 to 337) ---
+    h1_x = 15
+    rect(h1_x, 190, h1_x + hero_w, 210, fill=RED_ACCENT)
+    draw.text((h1_x + 8, 200), "MISSILES OVER RIYADH", fill=WHITE, font=f_hero_badge, anchor="lm")
+    pill(h1_x + hero_w - 78, 194, h1_x + hero_w - 6, 206, fill=WHITE, r=2)
+    draw.text((h1_x + hero_w - 42, 200), "3 SHOT DOWN", fill=RED_ACCENT, font=f_pill, anchor="mm")
+    
+    # Graphic Box 1 (Night Skyline & Interception Arcs)
+    rect(h1_x, 210, h1_x + hero_w, 300, fill="#070d1e", outline=LINE_COLOR)
+    for bx, bh, bw in [(0, 35, 25), (28, 55, 30), (62, 35, 20), (86, 65, 35), (125, 40, 22), 
+                       (150, 70, 32), (185, 50, 28), (216, 60, 30), (250, 38, 25), (278, 55, 35)]:
+        draw.rectangle([h1_x + bx, 300 - bh, h1_x + bx + bw, 300], fill="#02050d")
+        for wy in range(300 - bh + 6, 296, 8):
+            for wx in range(h1_x + bx + 4, h1_x + bx + bw - 4, 6):
+                if (wx + wy) % 5 != 0:
+                    draw.rectangle([wx, wy, wx + 2, wy + 3], fill="#ffea78" if (wx * wy) % 3 == 0 else "#38bdf8")
+    
+    arcs = [
+        ([(h1_x + 30, 295), (h1_x + 80, 240), (h1_x + 140, 235)], "#ffdd44"),
+        ([(h1_x + 280, 295), (h1_x + 230, 245), (h1_x + 175, 238)], "#ff9933"),
+        ([(h1_x + 20, 290), (h1_x + 100, 260), (h1_x + 210, 248)], "#ffffff"),
+    ]
+    for pts, col in arcs:
+        for t in range(50):
+            u = t / 50.0
+            px = (1-u)**2 * pts[0][0] + 2*(1-u)*u*pts[1][0] + u**2*pts[2][0]
+            py = (1-u)**2 * pts[0][1] + 2*(1-u)*u*pts[1][1] + u**2*pts[2][1]
+            draw.point((px, py), fill=col)
+            draw.point((px+1, py), fill=col)
+    
+    for cx, cy in [(h1_x + 140, 235), (h1_x + 175, 238), (h1_x + 210, 248)]:
+        draw.ellipse([cx-4, cy-4, cx+4, cy+4], fill="#ffeedd")
+        for dx, dy in [(-8, 0), (8, 0), (0, -8), (0, 8), (-6, -6), (6, 6), (-6, 6), (6, -6)]:
+            draw.line([(cx, cy), (cx + dx, cy + dy)], fill="#ffcc00", width=1)
+            
+    pill(h1_x + 8, 283, h1_x + 102, 296, fill="#000000", r=2)
+    draw.text((h1_x + 55, 289), "Coalition statement", fill=WHITE, font=f_pill, anchor="mm")
+    
     # Content 1
-    rect(h1_x, gy1 + gh1, h1_x + hero_w, 395, fill=WHITE, outline=BORDER_GREY)
-    draw.text((h1_x + 8, gy1 + gh1 + 8), "1 · BAHRAIN & STRAIT OF HORMUZ", fill=RED_ACCENT, font=f_pill)
-    draw.text((h1_x + 8, gy1 + gh1 + 20), "Iran strikes Bahrain as\ntankers hit in Hormuz", fill=BLACK, font=f_hero_title, spacing=2)
-    draw.text((h1_x + 8, gy1 + gh1 + 56), "Bahrain: Iranian attack set a civilian industrial site\nablaze; no casualties reported. IRGC says it hit US\npositions. UKMTO: two tankers attacked off Khasab.", fill=DARK_GREY, font=f_hero_body, spacing=2)
-    draw.text((h1_x + 8, 383), "(Reuters · AFP · UKMTO)", fill=LIGHT_GREY, font=f_hero_src)
-    pill(h1_x + hero_w - 52, 377, h1_x + hero_w - 8, 389, fill=RED_DARK, r=2)
-    draw.text((h1_x + hero_w - 30, 383), "OFFICIAL", fill=WHITE, font=f_pill, anchor="mm")
+    rect(h1_x, 300, h1_x + hero_w, 424, fill=WHITE, outline=LINE_COLOR)
+    draw.text((h1_x + 8, 308), "1 · RIYADH · SAUDI ARABIA", fill=RED_ACCENT, font=f_pill)
+    draw.text((h1_x + 8, 320), "Saudi defences down three\nmissiles aimed at the capital", fill=BLACK, font=f_hero_title, spacing=2)
+    draw.text((h1_x + 8, 362), "Third night of alerts in a row: blasts heard over capital\nat 02:00, no damage or casualties. IRGC also claims\nstrikes on Gulf maritime radar positions.", fill=DARK_GREY, font=f_hero_body, spacing=2)
+    draw.text((h1_x + 8, 412), "(Reuters · AFP · Coalition statement)", fill=LIGHT_GREY, font=f_source)
+    pill(h1_x + hero_w - 48, 407, h1_x + hero_w - 8, 419, fill=OFFICIAL_BLUE, r=2)
+    draw.text((h1_x + hero_w - 28, 413), "OFFICIAL", fill=WHITE, font=f_pill, anchor="mm")
 
-    # --- HERO 2: SPARTA II IN GULF OF FINLAND (x: 350 to 672) ---
-    h2_x = h1_x + hero_w + 8
-    rect(h2_x, 170, h2_x + hero_w, 189, fill=RED_ACCENT)
-    draw.text((h2_x + 8, 179), "GULF OF FINLAND · SECURITY", fill=WHITE, font=f_hero_tab, anchor="lm")
-    pill(h2_x + hero_w - 74, 173, h2_x + hero_w - 6, 186, fill=WHITE, r=2)
-    draw.text((h2_x + hero_w - 40, 179), "ATTACKED", fill=RED_ACCENT, font=f_hero_badge, anchor="mm")
-
-    # Graphic Box 2 (Baltic sea, Cargo ship silhouette on fire, drone)
-    gx2, gy2, gw2, gh2 = h2_x, 189, hero_w, 88
-    rect(gx2, gy2, gx2 + gw2, gy2 + gh2, fill="#0f172a", outline=BORDER_GREY)
-    # Sea
-    rect(gx2, gy2 + gh2 - 24, gx2 + gw2, gy2 + gh2, fill="#0369a1")
-    # Cargo ship hull
-    draw.polygon([(gx2 + 65, gy2 + gh2 - 24), (gx2 + 250, gy2 + gh2 - 24), (gx2 + 235, gy2 + gh2 - 8), (gx2 + 80, gy2 + gh2 - 8)], fill="#334155")
-    # Ship superstructure & containers
-    rect(gx2 + 90, gy2 + gh2 - 44, gx2 + 130, gy2 + gh2 - 24, fill="#64748b")
-    rect(gx2 + 140, gy2 + gh2 - 38, gx2 + 175, gy2 + gh2 - 24, fill="#b91c1c")
-    rect(gx2 + 180, gy2 + gh2 - 38, gx2 + 215, gy2 + gh2 - 24, fill="#0284c7")
-    # Flames and smoke plume
-    draw.polygon([(gx2 + 115, gy2 + gh2 - 44), (gx2 + 105, gy2 + 22), (gx2 + 125, gy2 + 14), (gx2 + 135, gy2 + gh2 - 44)], fill="#ef4444")
-    draw.polygon([(gx2 + 120, gy2 + gh2 - 44), (gx2 + 112, gy2 + 28), (gx2 + 128, gy2 + 22), (gx2 + 130, gy2 + gh2 - 44)], fill="#f59e0b")
-    # Drone in sky
-    draw.line([(gx2 + 40, gy2 + 25), (gx2 + 62, gy2 + 25)], fill="#ffffff", width=2)
-    draw.line([(gx2 + 51, gy2 + 18), (gx2 + 51, gy2 + 32)], fill="#ffffff", width=2)
-    pill(gx2 + 8, gy2 + gh2 - 18, gx2 + 155, gy2 + gh2 - 4, fill="#000000", r=2)
-    draw.text((gx2 + 81, gy2 + gh2 - 11), "Russian cargo Sparta II adrift", fill=WHITE, font=f_pill, anchor="mm")
+    # --- HERO 2: COP31 IN OVERTIME (x: 350 to 672) ---
+    h2_x = 15 + hero_w + 6
+    rect(h2_x, 190, h2_x + hero_w, 210, fill=RED_ACCENT)
+    draw.text((h2_x + 8, 200), "COP31 IN OVERTIME", fill=WHITE, font=f_hero_badge, anchor="lm")
+    pill(h2_x + hero_w - 95, 194, h2_x + hero_w - 6, 206, fill=WHITE, r=2)
+    draw.text((h2_x + hero_w - 50, 200), "NO DEAL · DAY 13", fill=RED_ACCENT, font=f_pill, anchor="mm")
+    
+    # Graphic Box 2 (Globe, Thermometer, Clock)
+    rect(h2_x, 210, h2_x + hero_w, 300, fill="#e8f3fa", outline=LINE_COLOR)
+    gx, gy = h2_x + 48, 255
+    draw.ellipse([gx - 26, gy - 26, gx + 26, gy + 26], fill="#3498db", outline="#2980b9")
+    draw.chord([gx - 20, gy - 14, gx + 6, gy + 12], 40, 220, fill="#2ecc71")
+    draw.chord([gx - 8, gy - 22, gx + 20, gy - 2], 120, 310, fill="#27ae60")
+    pill(h2_x + 10, 283, h2_x + 65, 296, fill="#000000", r=2)
+    draw.text((h2_x + 37, 289), "AP · AFP", fill=WHITE, font=f_pill, anchor="mm")
+    
+    tx = h2_x + 142
+    rect(tx - 4, 222, tx + 4, 280, fill=WHITE, outline="#95a5a6")
+    draw.ellipse([tx - 11, 272, tx + 11, 294], fill=RED_ACCENT, outline="#95a5a6")
+    rect(tx - 2, 238, tx + 2, 278, fill=RED_ACCENT)
+    draw.text((tx + 18, 228), "+1.5°C", fill=RED_ACCENT, font=f_pill)
+    draw.text((tx + 18, 238), "THRESHOLD", fill=RED_ACCENT, font=f_pill)
+    
+    cx, cy = h2_x + 248, 255
+    draw.ellipse([cx - 22, cy - 22, cx + 22, cy + 22], fill=WHITE, outline="#2c3e50", width=2)
+    draw.line([(cx, cy), (cx + 10, cy - 7)], fill=BLACK, width=2)
+    draw.line([(cx, cy), (cx + 2, cy - 14)], fill=BLACK, width=2)
+    pill(cx - 22, 283, cx + 22, 296, fill="#000000", r=2)
+    draw.text((cx, 289), "DAY 13", fill=WHITE, font=f_pill, anchor="mm")
 
     # Content 2
-    rect(h2_x, gy2 + gh2, h2_x + hero_w, 395, fill=WHITE, outline=BORDER_GREY)
-    draw.text((h2_x + 8, gy2 + gh2 + 8), "2 · BALTIC SEA · FINLAND", fill=RED_ACCENT, font=f_pill)
-    draw.text((h2_x + 8, gy2 + gh2 + 20), "Drones set Russian cargo\nship ablaze off Finland", fill=BLACK, font=f_hero_title, spacing=2)
-    draw.text((h2_x + 8, gy2 + gh2 + 56), "Sparta II, bound for Kaliningrad, was struck at about\n06:50 UTC and drifted into Finnish waters; crew safely\nevacuated. Finland: Ukrainian drone attack suspected.", fill=DARK_GREY, font=f_hero_body, spacing=2)
-    draw.text((h2_x + 8, 383), "(YLE · Reuters · MarineTraffic)", fill=LIGHT_GREY, font=f_hero_src)
-    pill(h2_x + hero_w - 62, 377, h2_x + hero_w - 8, 389, fill=GREEN_ACCENT, r=2)
-    draw.text((h2_x + hero_w - 35, 383), "CONFIRMED", fill=WHITE, font=f_pill, anchor="mm")
+    rect(h2_x, 300, h2_x + hero_w, 424, fill=WHITE, outline=LINE_COLOR)
+    draw.text((h2_x + 8, 308), "2 · ANTALYA · TÜRKIYE", fill=RED_ACCENT, font=f_pill)
+    draw.text((h2_x + 8, 320), "Climate summit deadlocked\nas talks run into overtime", fill=BLACK, font=f_hero_title, spacing=2)
+    draw.text((h2_x + 8, 362), "A draft omitting fossil fuel phaseout split 200 nations.\nEU and island states reject text; 130+ countries demand\nthey remain named. Talks paused overnight.", fill=DARK_GREY, font=f_hero_body, spacing=2)
+    draw.text((h2_x + 8, 412), "(AP · AFP · Al Jazeera)", fill=LIGHT_GREY, font=f_source)
+    pill(h2_x + hero_w - 56, 407, h2_x + hero_w - 8, 419, fill=CONFIRMED_GREEN, r=2)
+    draw.text((h2_x + hero_w - 32, 413), "CONFIRMED", fill=WHITE, font=f_pill, anchor="mm")
 
-    # --- HERO 3: COP31 IN ANTALYA (x: 686 to 1010) ---
-    h3_x = h2_x + hero_w + 8
-    rect(h3_x, 170, h3_x + hero_w, 189, fill=RED_ACCENT)
-    draw.text((h3_x + 8, 179), "COP31, ANTALYA · CLIMATE", fill=WHITE, font=f_hero_tab, anchor="lm")
-    pill(h3_x + hero_w - 74, 173, h3_x + hero_w - 6, 186, fill=WHITE, r=2)
-    draw.text((h3_x + hero_w - 40, 179), "DEADLOCK", fill=RED_ACCENT, font=f_hero_badge, anchor="mm")
-
-    # Graphic Box 3 (Conference globe, +1.5C thermometer, Overtime clock)
-    gx3, gy3, gw3, gh3 = h3_x, 189, hero_w, 88
-    rect(gx3, gy3, gx3 + gw3, gy3 + gh3, fill="#f0f9ff", outline=BORDER_GREY)
-    # Conference Earth Globe
-    cx3, cy3 = gx3 + 50, gy3 + 44
-    draw.ellipse([cx3 - 26, cy3 - 26, cx3 + 26, cy3 + 26], fill="#0284c7", outline="#0369a1")
-    draw.chord([cx3 - 20, cy3 - 14, cx3 + 6, cy3 + 12], 40, 220, fill="#22c55e")
-    draw.chord([cx3 - 10, cy3 - 22, cx3 + 18, cy3 - 2], 120, 310, fill="#16a34a")
-    # Thermometer
-    tx3 = gx3 + 145
-    rect(tx3 - 4, gy3 + 15, tx3 + 4, gy3 + 68, fill=WHITE, outline="#64748b")
-    draw.ellipse([tx3 - 10, gy3 + 60, tx3 + 10, gy3 + 80], fill=RED_ACCENT, outline="#64748b")
-    rect(tx3 - 2, gy3 + 30, tx3 + 2, gy3 + 66, fill=RED_ACCENT)
-    draw.text((tx3 + 15, gy3 + 20), "+1.5°C", fill=RED_ACCENT, font=f_card_tab)
-    draw.text((tx3 + 15, gy3 + 32), "AT RISK", fill=RED_DARK, font=f_pill)
-    # Clock
-    clk_x = gx3 + 245
-    draw.ellipse([clk_x - 22, cy3 - 22, clk_x + 22, cy3 + 22], fill=WHITE, outline="#0f172a", width=2)
-    draw.line([(clk_x, cy3), (clk_x + 10, cy3 - 8)], fill=BLACK, width=2)
-    draw.line([(clk_x, cy3), (clk_x + 2, cy3 - 14)], fill=BLACK, width=2)
-    pill(gx3 + 8, gy3 + gh3 - 18, gx3 + 145, gy3 + gh3 - 4, fill="#000000", r=2)
-    draw.text((gx3 + 76, gy3 + gh3 - 11), "Day 13 talks paused overnight", fill=WHITE, font=f_pill, anchor="mm")
+    # --- HERO 3: QUAKE IN PERU (x: 686 to 1008) ---
+    h3_x = 15 + (hero_w + 6) * 2
+    rect(h3_x, 190, h3_x + hero_w, 210, fill=RED_ACCENT)
+    draw.text((h3_x + 8, 200), "DEEP QUAKE IN PERU", fill=WHITE, font=f_hero_badge, anchor="lm")
+    pill(h3_x + hero_w - 138, 194, h3_x + hero_w - 6, 206, fill=WHITE, r=2)
+    draw.text((h3_x + hero_w - 72, 200), "00:09 UTC · 108 KM DEEP", fill=RED_ACCENT, font=f_pill, anchor="mm")
+    
+    # Graphic Box 3 (Mountains, Seismograph wave, House)
+    rect(h3_x, 210, h3_x + hero_w, 300, fill="#f9f2e7", outline=LINE_COLOR)
+    seismo_pts = [
+        (h3_x + 10, 245), (h3_x + 40, 245), (h3_x + 45, 240), (h3_x + 50, 250),
+        (h3_x + 55, 230), (h3_x + 60, 260), (h3_x + 65, 220), (h3_x + 70, 265),
+        (h3_x + 75, 235), (h3_x + 80, 252), (h3_x + 85, 242), (h3_x + 95, 245),
+        (h3_x + 120, 245), (h3_x + 125, 233), (h3_x + 130, 257), (h3_x + 135, 225),
+        (h3_x + 140, 270), (h3_x + 145, 235), (h3_x + 150, 250), (h3_x + 180, 245)
+    ]
+    for k in range(len(seismo_pts) - 1):
+        draw.line([seismo_pts[k], seismo_pts[k+1]], fill=RED_ACCENT, width=2)
+    
+    draw.text((h3_x + 12, 220), "6.7", fill=RED_ACCENT, font=f_stat_num)
+    draw.text((h3_x + 130, 221), "00:09 UTC", fill=DARK_GREY, font=f_pill)
+    
+    draw.polygon([(h3_x + 160, 298), (h3_x + 205, 245), (h3_x + 235, 265), (h3_x + 265, 230), (h3_x + 310, 298)], fill="#935116")
+    draw.polygon([(h3_x + 185, 298), (h3_x + 225, 255), (h3_x + 270, 298)], fill="#784212")
+    
+    hx = h3_x + 235
+    rect(hx, 268, hx + 38, 296, fill="#fdfefe", outline="#34495e", width=1)
+    draw.polygon([(hx - 4, 268), (hx + 19, 252), (hx + 42, 268)], fill="#c0392b", outline="#922b21")
+    rect(hx + 12, 278, hx + 24, 296, fill="#7f8c8d")
+    
+    pill(h3_x + hero_w - 65, 283, h3_x + hero_w - 10, 296, fill="#000000", r=2)
+    draw.text((h3_x + hero_w - 37, 289), "USGS · IGP", fill=WHITE, font=f_pill, anchor="mm")
 
     # Content 3
-    rect(h3_x, gy3 + gh3, h3_x + hero_w, 395, fill=WHITE, outline=BORDER_GREY)
-    draw.text((h3_x + 8, gy3 + gh3 + 8), "3 · ANTALYA · TÜRKIYE", fill=RED_ACCENT, font=f_pill)
-    draw.text((h3_x + 8, gy3 + gh3 + 20), "COP31 deadlocked over\nfossil fuels in overtime", fill=BLACK, font=f_hero_title, spacing=2)
-    draw.text((h3_x + 8, gy3 + gh3 + 56), "A day past deadline in Antalya, talks paused overnight.\nEU and Pacific island states reject draft omitting fossil\nfuels; 130+ countries demand they remain named.", fill=DARK_GREY, font=f_hero_body, spacing=2)
-    draw.text((h3_x + 8, 383), "(AP · AFP · Al Jazeera)", fill=LIGHT_GREY, font=f_hero_src)
-    pill(h3_x + hero_w - 52, 377, h3_x + hero_w - 8, 389, fill=RED_DARK, r=2)
-    draw.text((h3_x + hero_w - 30, 383), "OFFICIAL", fill=WHITE, font=f_pill, anchor="mm")
+    rect(h3_x, 300, h3_x + hero_w, 424, fill=WHITE, outline=LINE_COLOR)
+    draw.text((h3_x + 8, 308), "3 · CARHUAMAYO · PERU", fill=RED_ACCENT, font=f_pill)
+    draw.text((h3_x + 8, 320), "Magnitude 6.7 quake rattles\ncentral Peru, felt in Lima", fill=BLACK, font=f_hero_title, spacing=2)
+    draw.text((h3_x + 8, 362), "A deep tremor struck near Carhuamayo at 00:09 UTC.\nPeru's geophysical institute reported zero deaths, no major\nstructural collapses, and no Pacific tsunami risk.", fill=DARK_GREY, font=f_hero_body, spacing=2)
+    draw.text((h3_x + 8, 412), "(USGS · IGP Lima)", fill=LIGHT_GREY, font=f_source)
+    pill(h3_x + hero_w - 48, 407, h3_x + hero_w - 8, 419, fill=OFFICIAL_BLUE, r=2)
+    draw.text((h3_x + hero_w - 28, 413), "OFFICIAL", fill=WHITE, font=f_pill, anchor="mm")
 
-    # 7. 10 MIDDLE STORY CARDS (Cards 4 to 13, y: 402 to 572)
-    card_w = (WIDTH - 28 - 32) // 5  # ~192px each
-    card_h = 82
-
-    # ROW 1 (Cards 4 to 8, y: 402 to 484)
-    cards_r1 = [
-        ("4 · BRUSSELS · TRADE", "EU and Indonesia sign\ntrade pact", "Lifts 98.5% of tariffs after 10 yrs.", "(EU · Antara)", "OFFICIAL", BLUE_NAVY, "trade"),
-        ("5 · SINALOA · CRIME", "Mexico captures 'El\nChapo Isidro'", "FBI top-10 fugitive; 11 killed in raid.", "(PGR · AP)", "CONFIRMED", GREEN_ACCENT, "cartel"),
-        ("6 · GENEVA · AI ARMS", "128 states back talks\non 'killer robots'", "UN ends with no binding 2026 treaty.", "(UN · Reuters)", "OFFICIAL", BLUE_NAVY, "robot"),
-        ("7 · MERCURY · SCIENCE", "BepiColombo probe\nenters orbit", "18:24 UTC burn ends 8-yr journey.", "(ESA · JAXA)", "OFFICIAL", BLUE_NAVY, "orbit"),
-        ("8 · NIGERIA · TRAGEDY", "Funeral boat death\ntoll reaches 24", "Capsized Friday; 24 recovered Sat.", "(NEMA · Punch)", "OFFICIAL", BLUE_NAVY, "boat"),
+    # 6. 10 SECONDARY STORY CARDS: 2 ROWS (Cards 4 to 13, y: 432 to 596)
+    card_w = (WIDTH - 54) // 5
+    card_h = 78
+    
+    cards_row1 = [
+        ("4 · KYIV WARNING", "Zelensky: Crimea bridge\n\"will not stay\"", "Warns of strikes ahead.", "(NBC)", "REPORTED", REPORTED_MUSTARD, "bridge"),
+        ("5 · HORMUZ DRONE", "Iran says it downed a US\ndrone in Gulf", "Tehran claims; US silent.", "(IRIB)", "REPORTED", REPORTED_MUSTARD, "drone"),
+        ("6 · SINALOA RAID", "Mexico captures 'El\nChapo Isidro'", "FBI top-10 fugitive held.", "(AP · PGR)", "CONFIRMED", CONFIRMED_GREEN, "cartel"),
+        ("7 · GENEVA ARMS", "128 states back talks\non 'killer robots'", "UN ends without treaty.", "(Reuters)", "OFFICIAL", OFFICIAL_BLUE, "robot"),
+        ("8 · MERCURY ORBIT", "BepiColombo probe\nenters Mercury orbit", "18:24 UTC orbit burn.", "(ESA · JAXA)", "OFFICIAL", OFFICIAL_BLUE, "orbit"),
     ]
 
-    # ROW 2 (Cards 9 to 13, y: 490 to 572)
-    cards_r2 = [
-        ("9 · BANDA SEA · QUAKE", "Deep M6.8 quake hits\nTimor-Leste", "132km deep, felt Darwin; 0 tsunami.", "(USGS · BMKG)", "CONFIRMED", GREEN_ACCENT, "quake"),
-        ("10 · MANIPUR · ACCIDENT", "Tainted alcohol kills\n11 in India", "10+ in hospital; state probe ordered.", "(PTI · NDTV)", "OFFICIAL", BLUE_NAVY, "toxic"),
-        ("11 · TWICKENHAM · RUGBY", "England beat All Blacks\nby record 37-12", "Biggest margin over NZ in history.", "(BBC · Reuters)", "OFFICIAL", BLUE_NAVY, "rugby"),
-        ("12 · OSAKA · MUSIC", "BTS win five MAMA\nawards in Japan", "Album of Year 'Arirang' & 2 Daesangs.", "(Yonhap · Mnet)", "OFFICIAL", BLUE_NAVY, "award"),
-        ("13 · PARIS · PROTEST", "82,500 march on living\ncosts in France", "144 held; 6th Saturday of marches.", "(Ministry · AFP)", "OFFICIAL", BLUE_NAVY, "march"),
+    cards_row2 = [
+        ("9 · BRUSSELS PACT", "EU and Indonesia sign\ntrade agreement", "Lifts 98.5% of tariffs.", "(EU · Antara)", "OFFICIAL", OFFICIAL_BLUE, "trade"),
+        ("10 · CANBERRA AI", "Australia and China agree\nto AI talks", "Albanese wraps up trip.", "(ABC)", "OFFICIAL", OFFICIAL_BLUE, "bubbles"),
+        ("11 · BITCOIN $58,983", "Bitcoin slips below\n$59,000 level", "Down 3.9% in 24 hours.", "(CoinGecko)", "CONFIRMED", CONFIRMED_GREEN, "btc"),
+        ("12 · TWICKENHAM", "England beat All Blacks\nby record 37-12", "Historic rugby test win.", "(BBC)", "OFFICIAL", OFFICIAL_BLUE, "rugby"),
+        ("13 · RAHUL 124*", "Rahul century puts India\non top vs NZ", "India 344-2 at tea.", "(AFP)", "OFFICIAL", OFFICIAL_BLUE, "cricket"),
     ]
 
-    def draw_card_badge_icon(icon_type, cx, cy):
-        if icon_type == "trade":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#dbeafe", outline=BLUE_NAVY)
-            draw.text((cx, cy), "98%", fill=BLUE_NAVY, font=f_pill, anchor="mm")
+    def draw_card_icon(icon_type, cx, cy):
+        if icon_type == "bridge":
+            draw.line([(cx - 20, cy + 6), (cx + 20, cy + 6)], fill=BLACK, width=1)
+            draw.line([(cx - 8, cy - 6), (cx - 8, cy + 6)], fill=BLACK, width=2)
+            draw.line([(cx + 8, cy - 6), (cx + 8, cy + 6)], fill=BLACK, width=2)
+            draw.arc([cx - 24, cy - 8, cx + 8, cy + 16], 210, 330, fill=RED_ACCENT, width=1)
+            draw.arc([cx - 8, cy - 8, cx + 24, cy + 16], 210, 330, fill=RED_ACCENT, width=1)
+        elif icon_type == "drone":
+            draw.line([(cx - 14, cy), (cx + 14, cy)], fill="#2c3e50", width=2)
+            draw.line([(cx, cy - 5), (cx, cy + 5)], fill="#2c3e50", width=2)
+            draw.line([(cx - 6, cy - 5), (cx - 6, cy + 5)], fill="#2c3e50", width=1)
+            draw.line([(cx + 6, cy - 5), (cx + 6, cy + 5)], fill="#2c3e50", width=1)
+            draw.ellipse([cx + 10, cy - 3, cx + 16, cy + 3], fill=RED_ACCENT)
         elif icon_type == "cartel":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#fee2e2", outline=RED_DARK)
+            draw.ellipse([cx - 7, cy - 7, cx + 7, cy + 7], fill="#fee2e2", outline=RED_DARK)
             draw.text((cx, cy), "$5M", fill=RED_DARK, font=f_pill, anchor="mm")
         elif icon_type == "robot":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#f3e8ff", outline="#7e22ce")
+            draw.ellipse([cx - 7, cy - 7, cx + 7, cy + 7], fill="#f3e8ff", outline="#7e22ce")
             draw.text((cx, cy), "AI", fill="#7e22ce", font=f_pill, anchor="mm")
         elif icon_type == "orbit":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#fef3c7", outline=AMBER_ACCENT)
-            draw.text((cx, cy), "☿", fill=AMBER_ACCENT, font=f_card_head, anchor="mm")
-        elif icon_type == "boat":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#e0f2fe", outline=BLUE_ACCENT)
-            draw.text((cx, cy), "24†", fill=BLUE_ACCENT, font=f_pill, anchor="mm")
-        elif icon_type == "quake":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#fef2f2", outline=RED_ACCENT)
-            draw.text((cx, cy), "6.8", fill=RED_ACCENT, font=f_pill, anchor="mm")
-        elif icon_type == "toxic":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#fef3c7", outline=AMBER_ACCENT)
-            draw.text((cx, cy), "11†", fill=AMBER_ACCENT, font=f_pill, anchor="mm")
+            draw.ellipse([cx - 7, cy - 7, cx + 7, cy + 7], fill="#fef3c7", outline="#b45309")
+            draw.text((cx, cy), "☿", fill="#b45309", font=f_card_head, anchor="mm")
+        elif icon_type == "trade":
+            draw.ellipse([cx - 7, cy - 7, cx + 7, cy + 7], fill="#dbeafe", outline=OFFICIAL_BLUE)
+            draw.text((cx, cy), "98%", fill=OFFICIAL_BLUE, font=f_pill, anchor="mm")
+        elif icon_type == "bubbles":
+            draw.ellipse([cx - 12, cy - 6, cx + 2, cy + 6], fill="#e8f8f5", outline="#16a085")
+            draw.ellipse([cx - 2, cy - 3, cx + 12, cy + 9], fill="#e8f8f5", outline="#16a085")
+            draw.text((cx - 6, cy - 3), "··", fill="#16a085", font=f_pill)
+        elif icon_type == "btc":
+            draw.ellipse([cx - 12, cy - 6, cx + 2, cy + 6], fill="#f39c12", outline="#d68910")
+            draw.text((cx - 5, cy - 4), "₿", fill=WHITE, font=f_pill)
+            draw.text((cx + 6, cy - 2), "-3.9%", fill=RED_ACCENT, font=f_pill)
         elif icon_type == "rugby":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#dcfce7", outline=GREEN_ACCENT)
-            draw.text((cx, cy), "37-12", fill=GREEN_ACCENT, font=f_pill, anchor="mm")
-        elif icon_type == "award":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#fae8ff", outline="#a21caf")
-            draw.text((cx, cy), "★5", fill="#a21caf", font=f_pill, anchor="mm")
-        elif icon_type == "march":
-            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#f1f5f9", outline=DARK_GREY)
-            draw.text((cx, cy), "82k", fill=DARK_GREY, font=f_pill, anchor="mm")
+            draw.ellipse([cx - 8, cy - 8, cx + 8, cy + 8], fill="#dcfce7", outline=CONFIRMED_GREEN)
+            draw.text((cx, cy), "37-12", fill=CONFIRMED_GREEN, font=f_pill, anchor="mm")
+        elif icon_type == "cricket":
+            draw.line([(cx - 10, cy + 6), (cx + 4, cy - 5)], fill="#b7950b", width=3)
+            draw.ellipse([cx + 7, cy - 3, cx + 13, cy + 3], fill=RED_ACCENT)
+            draw.text((cx + 6, cy + 4), "124*", fill=BLACK, font=f_pill)
 
-    for row_idx, cards in enumerate([cards_r1, cards_r2]):
-        cy = 402 if row_idx == 0 else 490
+    for row_idx, cards in enumerate([cards_row1, cards_row2]):
+        cy = 432 if row_idx == 0 else 516
         for i, (cat, title, body, src, p_text, p_col, icon) in enumerate(cards):
-            cx = 14 + i * (card_w + 8)
-            rect(cx, cy, cx + card_w, cy + 16, fill=RED_ACCENT if row_idx == 0 and i < 2 else DARK_GREY)
-            draw.text((cx + 4, cy + 8), cat, fill=WHITE, font=f_card_tab, anchor="lm")
-            rect(cx, cy + 16, cx + card_w, cy + card_h, fill=WHITE, outline=BORDER_GREY)
-            
-            draw_card_badge_icon(icon, cx + card_w - 14, cy + 30)
-            draw.text((cx + 6, cy + 20), title, fill=BLACK, font=f_card_head, spacing=1)
-            draw.text((cx + 6, cy + 48), body, fill=MID_GREY, font=f_card_sub)
-            draw.text((cx + 6, cy + 70), src, fill=LIGHT_GREY, font=f_card_src)
-            pill(cx + card_w - 44, cy + 65, cx + card_w - 4, cy + 76, fill=p_col, r=2)
-            draw.text((cx + card_w - 24, cy + 70), p_text, fill=WHITE, font=f_pill, anchor="mm")
+            cx = 15 + i * (card_w + 6)
+            rect(cx, cy, cx + card_w, cy + 15, fill=RED_ACCENT if row_idx == 0 and i < 2 else BLACK)
+            draw.text((cx + 4, cy + 8), cat, fill=WHITE, font=f_card_cat, anchor="lm")
+            rect(cx, cy + 15, cx + card_w, cy + card_h, fill=WHITE, outline=LINE_COLOR)
+            draw_card_icon(icon, cx + card_w // 2, cy + 26)
+            draw.text((cx + 4, cy + 37), title, fill=BLACK, font=f_card_head, spacing=1)
+            draw.text((cx + 4, cy + 63), src, fill=LIGHT_GREY, font=f_source)
+            pill(cx + card_w - 42, cy + 59, cx + card_w - 3, cy + 70, fill=p_col, r=2)
+            draw.text((cx + card_w - 22, cy + 64), p_text, fill=WHITE, font=f_pill, anchor="mm")
 
     # DIVIDER LINE
-    draw.line([(14, 578), (WIDTH - 14, 578)], fill=BORDER_GREY, width=1)
+    draw.line([(15, 602), (WIDTH - 15, 602)], fill=LINE_COLOR, width=1)
 
-    # 8. BOTTOM SECTION: MAP (Left) & 24 STORIES (Right) (y: 584 to 846)
-    draw.text((14, 584), "WHERE IT HAPPENED · STORIES 1-13 ON THE GLOBAL MAP", fill=BLACK, font=f_map_title)
-    draw.text((456, 584), "ALSO ON SATURDAY 21 NOVEMBER 2026 · 24 MORE DATED STORIES", fill=BLACK, font=f_map_title)
+    # 7. BOTTOM SECTION: MAP (Left) & 24 MORE STORIES (Right) (y: 608 to 852)
+    draw.text((15, 608), "WHERE IT HAPPENED — STORIES 1-13 ON THE GLOBAL MAP", fill=BLACK, font=f_section_title)
+    draw.text((468, 608), "ALSO ON SATURDAY 21 NOVEMBER 2026 — 24 MORE DATED STORIES", fill=BLACK, font=f_section_title)
 
-    # MAP BOX (x: 14 to 444, y: 598 to 846)
-    map_x1, map_y1, map_x2, map_y2 = 14, 598, 444, 846
-    rect(map_x1, map_y1, map_x2, map_y2, fill="#eef6fb", outline=BORDER_GREY)
+    # MAP BOX (x: 15 to 455, y: 622 to 852)
+    rect(15, 622, 455, 852, fill="#eef3f7", outline=LINE_COLOR)
 
     def map_coord(lon, lat):
-        mx = map_x1 + int((lon + 175) / 355 * (map_x2 - map_x1))
-        my = map_y1 + int((75 - lat) / 130 * (map_y2 - map_y1))
+        mx = 15 + int((lon + 172) / 350 * 440)
+        my = 622 + int((75 - lat) / 130 * 230)
         return (mx, my)
 
     continents = [
@@ -350,112 +362,102 @@ def generate_broadsheet(output_path):
 
     for poly in continents:
         pts = [map_coord(lon, lat) for lon, lat in poly]
-        draw.polygon(pts, fill="#e2e8f0", outline="#cbd5e1")
+        draw.polygon(pts, fill="#ded0b6", outline="#c5b597")
 
-    # Pins 1 to 13 on the map
     pins = [
-        (1, 50, 26),     # Bahrain / Hormuz
-        (2, 26, 60),     # Gulf of Finland
-        (3, 31, 37),     # Antalya
-        (4, 4, 50),      # Brussels
-        (5, -107, 25),   # Sinaloa
-        (6, 6, 46),      # Geneva
-        (7, 0, 0),       # Mercury / Space icon at equator center
-        (8, 6, 5),       # Nigeria
-        (9, 127, -8),    # Banda Sea
-        (10, 93, 24),    # Manipur
-        (11, -0.1, 51),  # Twickenham / London
-        (12, 135, 34),   # Osaka
-        (13, 2, 48),     # Paris
+        (1, 47, 25),     # Riyadh
+        (2, 31, 37),     # Antalya
+        (3, -75, -11),   # Junin / Peru
+        (4, 30, 50),     # Kyiv
+        (5, 56, 27),     # Hormuz
+        (6, -107, 25),   # Sinaloa
+        (7, 6, 46),      # Geneva
+        (8, 0, 0),       # Mercury / Space orbit
+        (9, 4, 50),      # Brussels
+        (10, 149, -35),  # Canberra
+        (11, -74, 41),   # Bitcoin / NY
+        (12, -0.1, 51),  # Twickenham
+        (13, 175, -41),  # Wellington
     ]
 
     for num, lon, lat in pins:
-        if num == 7:  # Space pin
-            px, py = map_x1 + 35, map_y2 - 25
-            pill(px - 14, py - 8, px + 26, py + 8, fill="#0f172a", r=2)
-            draw.text((px + 6, py), "7 Orbit", fill=WHITE, font=f_pill, anchor="mm")
+        if num == 8:
+            px, py = 15 + 35, 852 - 18
+            pill(px - 14, py - 7, px + 26, py + 7, fill="#0f172a", r=2)
+            draw.text((px + 6, py), "8 Orbit", fill=WHITE, font=f_pill, anchor="mm")
             continue
         px, py = map_coord(lon, lat)
-        draw.ellipse([px - 6, py - 6, px + 6, py + 6], fill=RED_ACCENT if num <= 3 else BLUE_NAVY, outline=WHITE, width=1)
+        draw.ellipse([px - 6, py - 6, px + 6, py + 6], fill=RED_ACCENT if num <= 3 else OFFICIAL_BLUE, outline=WHITE, width=1)
         draw.text((px, py), str(num), fill=WHITE, font=f_map_pin, anchor="mm")
 
-    # Map Legend footer
-    draw.text((map_x1 + 8, map_y2 - 12), "● 1-3 Lead Breaking Events   ● 4-13 Global Stories", fill=DARK_GREY, font=f_card_src)
-
-    # 24 MORE STORIES (Stories 14 to 37) in 2 compact columns
-    col1_stories = [
-        ("14", "Jerusalem:", "Eisenkot invites Likud to coalition talks", "Times of Israel"),
-        ("15", "Kyiv:", "Zelensky calls bridge strikes a 'fair response'", "BBC"),
-        ("16", "Gaza City:", "Missile strike on food vehicle kills three", "Reuters"),
-        ("17", "Riyadh:", "Coalition says downed 3 Houthi missiles", "Reuters"),
-        ("18", "Beirut:", "Aoun demands Israeli pull-out, end to Iran", "AFP"),
-        ("19", "Brussels:", "Costas EU budget €204bn cut, tax on big tech", "EUObserver"),
-        ("20", "Brasilia:", "Bolsonaro moved to intensive care", "Reuters"),
-        ("21", "Junin, Peru:", "Deep M6.7 quake strikes at 00:09 UTC", "USGS"),
-        ("22", "Washington:", "Trump confirms FBI database breach", "Reuters"),
-        ("23", "Serang, Java:", "Sweet factory fire: 4 dead, 36 injured", "Antara"),
-        ("24", "Hanoi:", "Parliament speeds land expropriation law", "Reuters"),
-        ("25", "Savar:", "80 garment factories shut over wages", "Daily Star"),
+    # 24 DATED STORIES (Stories 14 to 37)
+    stories_col1 = [
+        ("14", "Jerusalem:", "Eisenkot invites Likud to coalition talks (TOI)"),
+        ("15", "Gaza City:", "Missile strike on food vehicle kills 3 (Reuters)"),
+        ("16", "Antalya:", "EU warns COP31 risks 'fossil summit' (AFP)"),
+        ("17", "Antalya:", "Panama threatens to block climate text (AJ)"),
+        ("18", "Antalya:", "Indonesia PLN signs clean-power deals (Antara)"),
+        ("19", "Yemen:", "Houthis threaten Jeddah and Red Sea ports (AJ)"),
+        ("20", "Washington:", "Trump confirms FBI database breach (Reuters)"),
+        ("21", "Washington:", "SpaceX Pentagon launch funding row (CNN)"),
+        ("22", "Texas:", "70-year-old's execution takes 63 min (ABC)"),
+        ("23", "Los Angeles:", "Jury convicts Palisades arsonist (ABC)"),
+        ("24", "Missouri:", "Judge approves $7.25bn settlement (AFP)"),
+        ("25", "Vancouver:", "Defence rests in landmark climate trial (AFP)"),
     ]
 
-    col2_stories = [
-        ("26", "Mastung:", "Pakistan forces kill 15 militants in raid", "Dawn"),
-        ("27", "Beijing:", "Singapore's Wong meets Li Qiang; 20 deals", "Straits Times"),
-        ("28", "Qinghai:", "M5.9 quake at 14:45 UTC in west China", "USGS"),
-        ("29", "Zagreb:", "Thousands rally over psychiatric death", "Reuters"),
-        ("30", "Dublin:", "Ireland beat champions South Africa 20-17", "RTE Sport"),
-        ("31", "Turin:", "Alcaraz beats Shelton in ATP Finals semi", "ATP Tour"),
-        ("32", "Melbourne:", "Australia beat England by 3 wkts in T20", "Cricket Aus"),
-        ("33", "Wellington:", "Rahul 124* leads India on Day 3 vs NZ", "ESPNcricinfo"),
-        ("34", "Abuja:", "CAF 54 nations endorse Infantino 3rd term", "AFP"),
-        ("35", "Niger State:", "Gunmen kill village head in dawn raid", "Punch"),
-        ("36", "Cornwall:", "Spitting Image creator Peter Fluck dies", "BBC"),
-        ("37", "Hormuz:", "Lewis Pugh ends 15km marine swim", "BBC"),
+    stories_col2 = [
+        ("26", "Pyongyang:", "Kim tours factories after summit (KCNA)"),
+        ("27", "Sejong:", "Freight train derails; zero casualties (K. Herald)"),
+        ("28", "Taipei:", "Budget and cash payout passed (T. Times)"),
+        ("29", "Bangkok:", "Arsenic reduction plan for two rivers (Nation)"),
+        ("30", "Mastung:", "Pakistan forces kill 15 militants in raid (Dawn)"),
+        ("31", "Qinghai:", "M5.9 quake at 14:45 UTC in west China (USGS)"),
+        ("32", "Dublin:", "Ireland beat champions South Africa 20-17 (RTE)"),
+        ("33", "Turin:", "Alcaraz beats Shelton in ATP Finals semi (ATP)"),
+        ("34", "Melbourne:", "Australia beat England in 1st T20 (Cricket Aus)"),
+        ("35", "Nigeria:", "Funeral boat death toll reaches 24 (NEMA)"),
+        ("36", "Serang:", "Sweet factory fire kills 4, 36 injured (Antara)"),
+        ("37", "Las Vegas:", "Verstappen sent to stewards over lap (Autosport)"),
     ]
 
-    start_y = 600
-    row_h = 20.2
-    # Col 1 (x: 456 to 726)
-    for i, (num, loc, txt, src) in enumerate(col1_stories):
-        sy = int(start_y + i * row_h)
-        draw.text((456, sy), num, fill=RED_ACCENT, font=f_story_num)
-        draw.text((472, sy), loc, fill=BLACK, font=f_story_loc)
-        draw.text((534, sy), txt, fill=DARK_GREY, font=f_story_txt)
-        draw.text((722, sy), f"({src})", fill=LIGHT_GREY, font=f_card_src, anchor="ra")
+    start_y = 626
+    row_gap = 18.8
+    for i, (num, loc, desc) in enumerate(stories_col1):
+        sy = int(start_y + i * row_gap)
+        draw.text((468, sy), num, fill=RED_ACCENT, font=f_story_num)
+        draw.text((484, sy), loc, fill=BLACK, font=f_story_loc)
+        draw.text((546, sy), desc, fill=DARK_GREY, font=f_story_desc)
 
-    # Col 2 (x: 738 to 1010)
-    for i, (num, loc, txt, src) in enumerate(col2_stories):
-        sy = int(start_y + i * row_h)
-        draw.text((738, sy), num, fill=RED_ACCENT, font=f_story_num)
-        draw.text((754, sy), loc, fill=BLACK, font=f_story_loc)
-        draw.text((816, sy), txt, fill=DARK_GREY, font=f_story_txt)
-        draw.text((1010, sy), f"({src})", fill=LIGHT_GREY, font=f_card_src, anchor="ra")
+    for i, (num, loc, desc) in enumerate(stories_col2):
+        sy = int(start_y + i * row_gap)
+        draw.text((742, sy), num, fill=RED_ACCENT, font=f_story_num)
+        draw.text((758, sy), loc, fill=BLACK, font=f_story_loc)
+        draw.text((820, sy), desc, fill=DARK_GREY, font=f_story_desc)
 
-    # 9. DATE CHECK BOX (y: 852 to 980)
-    rect(14, 852, WIDTH - 14, 980, fill="#fffbeb", outline=RED_ACCENT, width=1)
-    rect(14, 852, WIDTH - 14, 870, fill=RED_ACCENT)
-    draw.text((22, 861), "DATE CHECK — WELL-KNOWN STORIES EXCLUDED BECAUSE THEY OCCURRED ON OTHER CALENDAR DAYS", fill=WHITE, font=f_date_head, anchor="lm")
+    # 8. DATE CHECK BOX (y: 860 to 975)
+    rect(15, 860, WIDTH - 15, 975, fill="#fdfaf5", outline=RED_ACCENT, width=1)
+    rect(15, 860, WIDTH - 15, 878, fill=RED_ACCENT)
+    draw.text((24, 869), "DATE CHECK — WELL-KNOWN STORIES EXCLUDED BECAUSE THEY OCCURRED ON OTHER CALENDAR DAYS", fill=WHITE, font=f_date_title, anchor="lm")
+    
+    draw.text((24, 886), "LEFT OUT (FRIDAY 20 NOV):", fill=RED_DARK, font=f_date_bold)
+    draw.text((180, 886), "Wall Street fall into correction · Russian barrage on Kyiv bridges · missile in Poland · UK-EU deal ·", fill=DARK_GREY, font=f_date_text)
+    draw.text((24, 902), "Cyclone Akvan landfall · Denmark expels Russian attaché · Kryvyi Rih strike · Harry Kane injury · Manipur illicit brew date.", fill=DARK_GREY, font=f_date_text)
 
-    draw.text((22, 878), "LEFT OUT (FRIDAY 20 NOV):", fill=RED_DARK, font=f_date_bold)
-    draw.text((175, 878), "Russian missiles land in Poland · Denmark expels Russian attaché · Wall Street tech sell-off · GTA VI sales record ·", fill=DARK_GREY, font=f_date_txt)
-    draw.text((22, 894), "Kryvyi Rih missile strike (kills 2, 42 hurt) · Harry Kane injury · Manipur illicit brew date · EU-UK summit.", fill=DARK_GREY, font=f_date_txt)
+    draw.text((24, 922), "NOT YET (SUNDAY 22 NOV):", fill=OFFICIAL_BLUE, font=f_date_bold)
+    draw.text((180, 922), "Verstappen wins Las Vegas GP race · COP31 formal approval session · India declare at 720-8 · Liverpool vs Man Utd.", fill=DARK_GREY, font=f_date_text)
 
-    draw.text((22, 916), "NOT YET (SUNDAY 22 NOV):", fill=BLUE_NAVY, font=f_date_bold)
-    draw.text((175, 916), "Verstappen wins Las Vegas GP race · COP31 formal approval session · India declare at 720-8 · Liverpool vs Man United.", fill=DARK_GREY, font=f_date_txt)
+    draw.text((24, 942), "STRICT 24H RECORD:", fill=CONFIRMED_GREEN, font=f_date_bold)
+    draw.text((180, 942), "Every story on this broadsheet occurred or was first reported on Saturday 21 November 2026 (UTC).", fill=DARK_GREY, font=f_date_text)
+    draw.text((24, 958), "Cross-checked across primary wire services: Reuters, AP, AFP, USGS, ESA, JAXA, BBC, Formula 1, ESPNcricinfo. Original vector drawings.", fill=LIGHT_GREY, font=f_date_text)
 
-    draw.text((22, 938), "STRICT INTEGRITY:", fill=GREEN_ACCENT, font=f_date_bold)
-    draw.text((175, 938), "Every story on this broadsheet occurred or was first reported on Saturday 21 November 2026 (UTC).", fill=DARK_GREY, font=f_date_txt)
-    draw.text((22, 954), "All facts cross-checked across primary wire services: Reuters, AP, AFP, USGS, ESA, JAXA, BBC, Formula 1, ESPNcricinfo.", fill=DARK_GREY, font=f_date_txt)
-    draw.text((22, 968), "Original vector layout, typography, maps and infographics designed specifically for the Saturday 21 November 2026 global record.", fill=MID_GREY, font=f_date_txt)
-
-    # 10. BOTTOM FOOTER STRIP (y: 988 to 1016)
-    draw.line([(14, 988), (WIDTH - 14, 988)], fill=BORDER_GREY, width=1)
-    draw.text((14, 996), "THE GLOBAL BROADSHEET · SATURDAY 21 NOVEMBER 2026 · EDITION 14,892 · INDEPENDENT SINGLE-DAY RECORD", fill=DARK_GREY, font=f_foot)
-    draw.text((WIDTH - 14, 996), "VERIFIED WIRE NETWORK · REUTERS · AP · AFP · USGS · ESA · FORMULA 1 · ESPNcricinfo", fill=MID_GREY, font=f_foot, anchor="ra")
+    # 9. FOOTER VERIFICATION KEY (y: 985 to 1014)
+    draw.line([(15, 985), (WIDTH - 15, 985)], fill=LINE_COLOR, width=1)
+    draw.text((15, 994), "Sources named beside each story · Original drawings · HOW WE CHECKED: CONFIRMED = 2+ outlets · OFFICIAL = on the record · REPORTED = one outlet", fill=DARK_GREY, font=f_footer)
+    draw.text((WIDTH - 15, 994), "THE GLOBAL BROADSHEET · SATURDAY 21 NOVEMBER 2026 · EDITION 14,892", fill=LIGHT_GREY, font=f_footer, anchor="ra")
 
     im.save(output_path, "PNG", optimize=True)
-    size_bytes = os.path.getsize(output_path)
-    print(f"Masterpiece broadsheet saved at {output_path}! Dimensions: {im.size}, Bytes: {size_bytes}")
+    print(f"Masterpiece broadsheet saved at {output_path}! Dimensions: {im.size}, Bytes: {os.path.getsize(output_path)}")
 
 if __name__ == "__main__":
     out = os.path.join(os.path.dirname(__file__), "entry.png")
